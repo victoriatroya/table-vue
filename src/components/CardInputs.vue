@@ -15,7 +15,7 @@
         <input type="email" class="new-input" v-model="newRow.username">
         <input type="text" class="new-input" v-model="newRow.email">
         <input type="text" class="new-input" v-model="newRow.address.street">
-        <input type="text" class="new-input" v-model="newRow.company">
+        <input type="text" class="new-input" v-model="newRow.company.name">
       </div>
     </div>
     <div class="card-footer">
@@ -30,14 +30,16 @@ export default {
   data() {
     return  {
       newRow: {
-        name: '',
-        username: '',
+        name: null,
+        username: null,
         email: '',
         address: {
-          street: ''
+          street: '',
         },
-        company: '',
-        id: 0,
+        company: {
+          name: '',
+        },
+        id: '',
       },
     }
   },
@@ -47,7 +49,10 @@ export default {
   },
   methods: {
     addNewUser() {
-      this.$emit('addNewData', this.newRow);
+      const { name, address, company, id, email, username } = this.newRow;
+      if(name && address && company && id && email && username) {
+        this.$emit('addNewData', this.newRow);
+      }
     },
   }
 }
@@ -62,13 +67,14 @@ export default {
   .header {
     font-size: 14px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     padding: 0 10px;
     text-align: center;
   }
 
   .body {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(6, auto);
 
     .new-input {
       outline: none;

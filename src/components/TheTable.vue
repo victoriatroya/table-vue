@@ -1,5 +1,5 @@
 <template>
-  <div class="table">
+  <div class="table" v-if="users.length">
     <div class="header">
       <p/>
       <p>Name</p>
@@ -42,13 +42,11 @@ export default {
       type: Array,
       default: []
     },
+    deleteRow: Function,
   },
   methods: {
     redirectTodos(id) {
       this.$router.push({path: `/users/${id}/todos`})
-    },
-    deleteRow(id) {
-      this.users = this.users.filter((item) => item.id !== id);
     },
   },
 }
@@ -58,6 +56,8 @@ export default {
   .header {
     font-size: 14px;
     color: #9B9EAC;
+    //display: flex;
+    //justify-content: space-around;
     display: grid;
     grid-template-columns: 80px repeat(6, auto) 80px;
 
@@ -65,6 +65,7 @@ export default {
       text-align: center;
       margin: 10px;
       padding: 10px;
+      width: auto;
     }
 
     input {
@@ -77,11 +78,10 @@ export default {
     font-size: 14px;
 
     .item {
-      display: flex;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: 80px repeat(6, auto) 80px;
       align-items: center;
       text-align: center;
-      padding: 0 10px;
 
       .checkbox {
         cursor: pointer;
@@ -97,7 +97,9 @@ export default {
       }
 
       p {
-        width: 110px;
+        width: 125px;
+        text-overflow: ellipsis;
+        white-space: initial;
       }
 
       .redirect-todos {
@@ -105,13 +107,11 @@ export default {
         text-decoration: underline;
         cursor: pointer;
       }
-
     }
   }
 
   .item:nth-child(odd) {
     background-color: #F5F6FA;
-    padding: 0 10px;
   }
 }
 

@@ -23,15 +23,9 @@
       </div>
       <div v-if="showNewCard">
         <CardInputs
-        :show-new-card="showNewCard"
-        :id="id"
-        :name="name"
-        :username="username"
-        :address="address"
-        :company="company"
-        :email="email"
-        :cancel-button="cancelButton"
-        @add-new-data="onNewRow"
+            :show-new-card="showNewCard"
+            :cancel-button="cancelButton"
+            @add-new-data="onNewRow"
         />
       </div>
       <div class="table-content">
@@ -40,8 +34,10 @@
           <img src="../assets/images/menu-dots.svg" alt="catherine">
         </div>
         <TheTable
-          :users="users"
+            :users="users"
+            :delete-row="deleteRow"
         />
+        <p v-if="!users.length" class="message">No existen usuarios por el momento</p>
       </div>
     </div>
   </div>
@@ -68,7 +64,7 @@ export default {
     this.getUsersData()
   },
   mounted() {
-    if (localStorage.length === 0) {
+    if (localStorage.getItem('loginData') === null) {
       router.push({path: '/'})
     }
   },
@@ -87,9 +83,12 @@ export default {
       this.showNewCard = false;
     },
     onNewRow(row) {
-      console.log(row);
-      this.users.push(row)
-    }
+      this.users.push(row);
+      this.showNewCard = false;
+    },
+    deleteRow(id) {
+      return this.users = this.users.filter((item) => item.id !== id);
+    },
   }
 }
 </script>
@@ -181,6 +180,12 @@ export default {
           font-size: 14px;
           font-weight: bold;
         }
+      }
+
+      .message {
+        color: #0054FE;
+        font-size: 20px;
+        text-align: center;
       }
     }
   }

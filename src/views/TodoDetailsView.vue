@@ -1,7 +1,7 @@
 <template>
   <div class="todo-details">
     <p class="title">Information User #<span>{{ id }}</span></p>
-    <div class="table">
+    <div class="table" v-if="data.length">
       <div class="header">
         <p class="text">Id</p>
         <p class="text">Title</p>
@@ -16,6 +16,7 @@
         </div>
       </div>
     </div>
+    <p v-if="!data.length" class="message">El usuario #{{ id }} aun no tiene información</p>
     <button class="go-back" @click="goToDashboard()">Go Back</button>
   </div>
 </template>
@@ -56,6 +57,11 @@
       text-align: center;
     }
 
+    .message {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
     .table {
       border: 1px solid #121b56;
       border-radius: 10px;
@@ -67,6 +73,10 @@
         border-bottom: 1px solid #121b56;
         background-color: #dddde7;
         border-radius: 10px 10px 0 0;
+
+        .text {
+          font-weight: bold;
+        }
       }
 
       .body {
@@ -85,7 +95,6 @@
     .text {
       text-align: center;
       font-size: 14px;
-      font-weight: bold;
       margin: 0;
       padding: 10px;
     }
