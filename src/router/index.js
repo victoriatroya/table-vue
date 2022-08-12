@@ -6,19 +6,24 @@ const router = createRouter({
     {
       path: '/',
       name: 'login',
-      component: () => import('../views/LoginView.vue')
+      component: () => import('../views/LoginView.vue'),
     },
     {
       path: '/dashboard',
       name: 'dashboard',
-      component: () => import('../views/DashboardView.vue')
+      component: () => import('../views/DashboardView.vue'),
     },
     {
-      path: '/users/:id/todos',
+      path: '/dashboard/users/:id/todos',
       name: 'todo-details',
       component: () => import('../views/TodoDetailsView.vue'),
     }
   ]
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.name !== 'login' && !localStorage.getItem('loginData')) next({ name: 'login' })
+   else next()
 })
 
 export default router

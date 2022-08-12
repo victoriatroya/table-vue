@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     redirectTodos(id) {
-      this.$router.push({path: `/users/${id}/todos`})
+      this.$router.push({path: `/dashboard/users/${id}/todos`})
     },
   },
 }
@@ -56,8 +56,6 @@ export default {
   .header {
     font-size: 14px;
     color: #9B9EAC;
-    //display: flex;
-    //justify-content: space-around;
     display: grid;
     grid-template-columns: 80px repeat(6, auto) 80px;
 

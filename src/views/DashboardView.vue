@@ -44,7 +44,6 @@
 </template>
 
 <script>
-import router from "../router";
 import TheTable from "../components/TheTable.vue"
 import CardInputs from "../components/CardInputs.vue"
 
@@ -62,11 +61,6 @@ export default {
   },
   created() {
     this.getUsersData()
-  },
-  mounted() {
-    if (localStorage.getItem('loginData') === null) {
-      router.push({path: '/'})
-    }
   },
   methods: {
     async getUsersData() {

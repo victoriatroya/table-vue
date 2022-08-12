@@ -9,19 +9,20 @@
       <p>Company</p>
     </div>
     <div >
-      <div class="body">
-        <input type="number" class="new-input" v-model="newRow.id">
-        <input type="text" class="new-input" v-model="newRow.name">
-        <input type="email" class="new-input" v-model="newRow.username">
-        <input type="text" class="new-input" v-model="newRow.email">
-        <input type="text" class="new-input" v-model="newRow.address.street">
-        <input type="text" class="new-input" v-model="newRow.company.name">
-      </div>
+      <form @submit.prevent="addNewUser" class="body">
+        <input type="number" class="new-input" v-model="form.id" required>
+        <input type="text" class="new-input" v-model="form.name" required>
+        <input type="text" class="new-input" v-model="form.username" required>
+        <input type="email" class="new-input" v-model="form.email" required>
+        <input type="text" class="new-input" v-model="form.address.street" required>
+        <input type="text" class="new-input" v-model="form.company.name" required>
+        <div class="card-footer">
+          <button class="create-user" @click="cancelButton()">Cancel</button>
+          <button class="create-user" type="submit">Create new user</button>
+        </div>
+      </form>
     </div>
-    <div class="card-footer">
-      <button class="create-user" @click="cancelButton()">Cancel</button>
-      <button class="create-user" @click="addNewUser">Create new user</button>
-    </div>
+
   </div>
 </template>
 
@@ -29,9 +30,9 @@
 export default {
   data() {
     return  {
-      newRow: {
-        name: null,
-        username: null,
+      form: {
+        name: '',
+        username: '',
         email: '',
         address: {
           street: '',
@@ -48,11 +49,9 @@ export default {
     cancelButton: Function,
   },
   methods: {
-    addNewUser() {
-      const { name, address, company, id, email, username } = this.newRow;
-      if(name && address && company && id && email && username) {
-        this.$emit('addNewData', this.newRow);
-      }
+    addNewUser(e) {
+      e.preventDefault();
+      this.$emit('addNewData', this.form);
     },
   }
 }
@@ -75,6 +74,7 @@ export default {
   .body {
     display: grid;
     grid-template-columns: repeat(6, auto);
+    grid-template-rows: auto auto;
 
     .new-input {
       outline: none;
@@ -89,22 +89,24 @@ export default {
     .new-input:first-child {
       border-left: 1px solid #121b56;
     }
-  }
 
-  .card-footer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 25px;
-    margin: 15px 0;
+    .card-footer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 25px;
+      margin: 15px 0;
+      grid-column-start: 1;
+      grid-column-end: -1;
 
-    .create-user {
-      background-color: #0054FE;
-      border-radius: 5px;
-      color: #ffffff;
-      border: none;
-      width: 120px;
-      height: 35px;
+      .create-user {
+        background-color: #0054FE;
+        border-radius: 5px;
+        color: #ffffff;
+        border: none;
+        width: 120px;
+        height: 35px;
+      }
     }
   }
 }
